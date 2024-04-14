@@ -1,0 +1,19 @@
+<!-- templates/add_recipe.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <h1>Add Recipe</h1>
+    <form action="/add" method="post">
+        <label for="name">Recipe Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="ingredients">Ingredients:</label><br>
+        <textarea id="ingredients" name="ingredients" rows="4" required></textarea><br><br>
+        <button type="submit">Add Recipe</button>
+    </form>
+</body>
+</html>
