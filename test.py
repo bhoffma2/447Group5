@@ -16,7 +16,10 @@ db = pymysql.connections.Connection(
 # Creating cursor object
 cursor = db.cursor()
 
+
+
 # Executing SQL query
+# cursor.execute("CREATE DATABASE IF NOT EXISTS users_db")
 cursor.execute("SHOW DATABASES")
 
 # Displaying databases
