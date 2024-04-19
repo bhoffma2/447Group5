@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
 
 # Creating Flask app
 app = Flask(__name__)
@@ -23,12 +24,28 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
+# Function decorator to check if the user is authenticated
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Check if the 'username' is stored in the session
+        if 'username' not in session:
+            # Redirect to the login page if the user is not logged in
+            return redirect(url_for('login'))
+        # Continue with the original function if the user is logged in
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 class Recipes(db.Model):
     __tablename__ = "recipes"
-
     id = db.Column(db.Integer, primary_key=True)
+    # userid = db.Column(db.Integer, nullable=True)
+    # tag = db.Column(db.String(500), nullable=True)
     name = db.Column(db.String(500), nullable=False, unique=True)
     ingredients = db.Column(db.String(500), nullable=False)
+    # instructions = db.Column(db.String(500), nullable=True)
 
 
 class Users(db.Model):
@@ -51,6 +68,7 @@ def home():
 
 
 @app.route("/add", methods=['GET', 'POST'])
+@login_required
 def add_recipe():
     if request.method == 'POST':
         recipe_name = request.form.get('name')
@@ -68,6 +86,7 @@ def add_recipe():
 
 
 @app.route("/remove", methods=['GET', 'POST'])
+@login_required
 def remove_recipe():
     if request.method == 'POST':
         recipe_name = request.form.get('name')
@@ -86,6 +105,7 @@ def remove_recipe():
 
 
 @app.route("/edit", methods=['GET', 'POST'])
+@login_required
 def edit_recipe():
     if request.method == 'POST':
         # Get updated recipe details from the form
@@ -135,7 +155,6 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-
         # Check if the username and password match
         current_user = Users.query.filter_by(username=username, password=password).first()
         if current_user:
@@ -148,6 +167,13 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    session.clear()
+    return render_template("login.html")
+
+
 if __name__ == "__main__":
+    # Somehow I stay logged in by default so I terminate the session every time the app starts
     create_db()
     app.run(debug=True)

@@ -19,7 +19,7 @@ cursor = db.cursor()
 
 
 # Executing SQL query
-# cursor.execute("CREATE DATABASE IF NOT EXISTS users_db")
+cursor.execute("CREATE DATABASE IF NOT EXISTS rating_db")
 cursor.execute("SHOW DATABASES")
 
 # Displaying databases
