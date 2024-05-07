@@ -20,6 +20,8 @@ from elasticsearch import Elasticsearch
 #        - xpack.security.transport.ssl
 #    5. Open the command line. Navigate to the elasticsearch/bin folder.
 #    6. type 'elasticsearch' into the command line from this folder. It should run elasticsearch
+#    7. In your program, make sure to add 'es = Elasticsearch(['http://localhost:9200'])' to your global variables. Also, make sure to close it with es.close() at the end
+#
 # Note that the command line window running elasticsearch should be unusable if successful. To exit, just command C.
 #########################################
 
