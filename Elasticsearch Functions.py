@@ -5,6 +5,23 @@ from sqlalchemy import Text, Date, Integer, String
 from sqlalchemy.orm import relationship
 from elasticsearch import Elasticsearch
 
+#########################################
+# NOTE TO TEAMMATES:
+# Do not run this code directly from the file. Take functions you need for your part instead.
+# The only functions designed for use outside of this program are search(), update_elasticsearch(), and hard_update_elasticsearch()
+# You also need to setup elasticsearch on your machine. Here are the steps to do it:
+#    1. Download the elasticsearch client from this link - https://www.elastic.co/downloads/elasticsearch
+#    2. Unzip elasticsearch
+#    3. From the elasticsearch folder, go to the config folder. Open the elasticsearch YAML source file
+#    4. In this file, change all of these parameters to FALSE. Make sure to save the file, otherwise it will not apply these changes:
+#        - xpack.security
+#        - xpack.security.enrollment
+#        - xpack.security.http.ssl
+#        - xpack.security.transport.ssl
+#    5. Open the command line. Navigate to the elasticsearch/bin folder.
+#    6. type 'elasticsearch' into the command line from this folder. It should run elasticsearch
+# Note that the command line window running elasticsearch should be unusable if successful. To exit, just command C.
+#########################################
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://CMSC447Team5:teamFive@localhost/recipes_db'
